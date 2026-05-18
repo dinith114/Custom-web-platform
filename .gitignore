@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build
+dist/
+build/
+.next/
+
+# Uploads (local dev only)
+uploads/
+
+# Implementation plan docs (local only, not for Git)
+implementation-plan.md
+custom_website_builder_implementation_plan.md
+unified_implementation_plan.md
