@@ -30,9 +30,9 @@ app.get('/api/health', (req, res) => {
 });
 
 // Backend Dev 1 modules
-// app.use('/api/auth', require('./modules/auth/auth.routes'));
-// app.use('/api/sites', require('./modules/sites/site.routes'));
-// app.use('/api/sites/:siteId/navigation', require('./modules/navigation/navigation.routes'));
+app.use('/api/auth', require('./modules/auth/auth.routes'));
+app.use('/api/sites', require('./modules/sites/site.routes'));
+app.use('/api/sites/:siteId/navigation', require('./modules/navigation/navigation.routes'));
 
 // Backend Dev 2 modules
 // app.use('/api/sites/:siteId/pages', require('./modules/pages/page.routes'));
