@@ -34,6 +34,9 @@ app.use('/api/auth', require('./modules/auth/auth.routes'));
 app.use('/api/sites', require('./modules/sites/site.routes'));
 app.use('/api/sites/:siteId/navigation', require('./modules/navigation/navigation.routes'));
 
+// Admin module
+app.use('/api/admin', require('./modules/admin/admin.routes'));
+
 // Backend Dev 2 modules
 // app.use('/api/sites/:siteId/pages', require('./modules/pages/page.routes'));
 // app.use('/api/sites/:siteId/media', require('./modules/media/media.routes'));
