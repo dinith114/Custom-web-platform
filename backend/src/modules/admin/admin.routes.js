@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { verifyToken, authorizeRoles } = require('../auth/auth.middleware');
+const { updateUserStatusRules, adminDeleteSiteRules } = require('../../validators/admin.validator');
+const validate = require('../../middleware/validate');
 const {
   getAllUsers,
   updateUserStatus,
@@ -13,10 +15,10 @@ router.use(verifyToken, authorizeRoles('admin'));
 
 // User Management
 router.get('/users', getAllUsers);
-router.put('/users/:userId/status', updateUserStatus);
+router.put('/users/:userId/status', updateUserStatusRules, validate, updateUserStatus);
 
 // Platform Site Management
 router.get('/sites', getAllSites);
-router.delete('/sites/:siteId', deleteSiteAsAdmin);
+router.delete('/sites/:siteId', adminDeleteSiteRules, validate, deleteSiteAsAdmin);
 
 module.exports = router;
