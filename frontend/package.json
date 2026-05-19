@@ -1,0 +1,27 @@
+{
+  "name": "website-builder",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "dev:builder": "turbo run dev --filter=builder",
+    "dev:renderer": "turbo run dev --filter=renderer",
+    "clean": "turbo run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.0"
+  },
+  "packageManager": "npm@11.14.1",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
