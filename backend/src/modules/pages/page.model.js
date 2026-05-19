@@ -1,30 +1,30 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const pageSchema = new mongoose.Schema(
   {
     siteId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Site',
-      required: [true, 'Site is required'],
+      ref: "Site",
+      required: [true, "Site is required"],
       index: true,
     },
     title: {
       type: String,
-      required: [true, 'Page title is required'],
+      required: [true, "Page title is required"],
       trim: true,
-      maxlength: [200, 'Page title cannot exceed 200 characters'],
+      maxlength: [200, "Page title cannot exceed 200 characters"],
     },
     slug: {
       type: String,
-      required: [true, 'Page slug is required'],
+      required: [true, "Page slug is required"],
       trim: true,
       lowercase: true,
-      maxlength: [200, 'Page slug cannot exceed 200 characters'],
+      maxlength: [200, "Page slug cannot exceed 200 characters"],
     },
     status: {
       type: String,
-      enum: ['draft', 'published'],
-      default: 'draft',
+      enum: ["draft", "published"],
+      default: "draft",
       index: true,
     },
     isHomePage: {
@@ -42,13 +42,13 @@ const pageSchema = new mongoose.Schema(
     seoTitle: {
       type: String,
       trim: true,
-      maxlength: [200, 'SEO title cannot exceed 200 characters'],
+      maxlength: [200, "SEO title cannot exceed 200 characters"],
       default: null,
     },
     seoDescription: {
       type: String,
       trim: true,
-      maxlength: [500, 'SEO description cannot exceed 500 characters'],
+      maxlength: [500, "SEO description cannot exceed 500 characters"],
       default: null,
     },
     publishedAt: {
@@ -58,7 +58,7 @@ const pageSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Uniqueness is scoped per site: multiple sites can have the same page slug.
@@ -71,4 +71,4 @@ pageSchema.methods.toJSON = function () {
   return page;
 };
 
-module.exports = mongoose.model('Page', pageSchema);
+module.exports = mongoose.model("Page", pageSchema);
