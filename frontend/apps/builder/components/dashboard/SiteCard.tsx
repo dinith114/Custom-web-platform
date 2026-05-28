@@ -35,7 +35,7 @@ export function SiteCard({ site }: SiteCardProps) {
         <h3 className="font-semibold text-gray-900 text-sm group-hover:text-brand-600 transition-colors">{site.name}</h3>
         <p className="mt-0.5 text-xs text-gray-400 font-mono">/{site.slug}</p>
         <div className="mt-3 flex items-center justify-between text-xs text-gray-400">
-          <span>Updated {new Date(site.updatedAt).toLocaleDateString()}</span>
+          <span>Updated {new Date(site.updatedAt).toLocaleDateString("en-US")}</span>
           <span className="text-brand-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity">Open →</span>
         </div>
       </div>

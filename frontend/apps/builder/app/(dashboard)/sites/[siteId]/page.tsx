@@ -30,7 +30,7 @@ export default function SiteOverviewPage() {
         </div>
         <div className="rounded-xl border border-gray-200 bg-white p-6 hover:shadow-md transition-shadow">
           <h3 className="text-sm font-medium text-gray-500">Last Updated</h3>
-          <p className="mt-2 text-lg font-semibold text-gray-900">{new Date(site.updatedAt).toLocaleDateString()}</p>
+          <p className="mt-2 text-lg font-semibold text-gray-900">{new Date(site.updatedAt).toLocaleDateString("en-US")}</p>
         </div>
       </div>
       <div className="mt-8">

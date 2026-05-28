@@ -55,12 +55,12 @@ export default function EditorPage() {
       const dropIndex = overData?.index ?? sections.length;
       const newSection: Section = {
         id: idGen(),
+        type: "custom",
         order: dropIndex,
         components: [{
           id: idGen(),
           type: activeData.blockType,
           props: { ...activeData.defaultProps },
-          order: 0,
         }],
       };
       addSection(newSection, dropIndex);

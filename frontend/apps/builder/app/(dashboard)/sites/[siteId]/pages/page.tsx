@@ -30,7 +30,7 @@ export default function SitePagesPage() {
                   <p className="font-medium text-gray-900 text-sm">{page.title}</p>
                   {page.isHomePage && <span className="rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-semibold text-brand-700">HOME</span>}
                 </div>
-                <p className="text-xs text-gray-400 mt-0.5">/{page.slug} · Updated {new Date(page.updatedAt).toLocaleDateString()}</p>
+                <p className="text-xs text-gray-400 mt-0.5">/{page.slug} · Updated {new Date(page.updatedAt).toLocaleDateString("en-US")}</p>
               </div>
               <div className="flex items-center gap-2">
                 <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ${page.status === "published" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"}`}>{page.status}</span>

@@ -12,7 +12,7 @@ interface NavEditorProps { siteId: string; }
 export function NavEditor({ siteId }: NavEditorProps) {
   const { navigation, isLoading, updateNav } = useNavigation(siteId);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const items = navigation?.items || [];
+  const items: NavItem[] = navigation || [];
 
   const handleAddItem = (label: string, url: string) => {
     const newItem: NavItem = {
@@ -21,6 +21,7 @@ export function NavEditor({ siteId }: NavEditorProps) {
       url,
       order: items.length,
       isVisible: true,
+      children: [],
     };
     updateNav.mutate({
       items: [...items, newItem],
@@ -30,7 +31,7 @@ export function NavEditor({ siteId }: NavEditorProps) {
 
   const handleDeleteItem = (id: string) => {
     updateNav.mutate({
-      items: items.filter((i) => i.id !== id),
+      items: items.filter((i: NavItem) => i.id !== id),
     });
   };
 
@@ -59,7 +60,7 @@ export function NavEditor({ siteId }: NavEditorProps) {
           {items.length === 0 ? (
             <p className="py-8 text-center text-sm text-gray-400">No menu items yet. Add your first navigation link.</p>
           ) : (
-            items.map((item) => (
+            items.map((item: NavItem) => (
               <NavItemComponent key={item.id} item={item} onEdit={handleEditItem} onDelete={handleDeleteItem} />
             ))
           )}

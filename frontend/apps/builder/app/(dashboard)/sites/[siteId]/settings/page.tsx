@@ -13,7 +13,7 @@ export default function SettingsPage() {
 
   const [name, setName] = useState(site.name);
   const [slug, setSlug] = useState(site.slug);
-  const [customDomain, setCustomDomain] = useState(site.settings?.customDomain || "");
+  const [customDomain, setCustomDomain] = useState(site.customDomain || "");
   const [favicon, setFavicon] = useState(site.settings?.favicon || "");
   const [saved, setSaved] = useState(false);
   const [activeTab, setActiveTab] = useState<"general" | "seo" | "danger">("general");

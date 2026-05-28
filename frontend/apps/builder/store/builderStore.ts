@@ -4,7 +4,7 @@ import type { Section } from "@builder/types";
 
 type DeviceMode = "desktop" | "tablet" | "mobile";
 
-interface BuilderState {
+export interface BuilderState {
   sections: Section[];
   selectedComponentId: string | null;
   historyStack: Section[][];

@@ -16,7 +16,7 @@ export default function NavigationPage() {
 
   const addItem = () => {
     if (!newLabel.trim()) return;
-    setItems([...items, { id: `nav-${Date.now()}`, label: newLabel.trim(), url: newUrl.trim() || "#", order: items.length, isVisible: true }]);
+    setItems([...items, { id: `nav-${Date.now()}`, label: newLabel.trim(), url: newUrl.trim() || "#", order: items.length, isVisible: true, children: [] }]);
     setNewLabel("");
     setNewUrl("");
     setIsAddOpen(false);
