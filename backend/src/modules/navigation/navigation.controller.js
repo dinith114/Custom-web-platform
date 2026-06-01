@@ -1,5 +1,8 @@
-const Navigation = require('./navigation.model');
-const { successResponse, errorResponse } = require('../../utils/responseHelper');
+const Navigation = require("./navigation.model");
+const {
+  successResponse,
+  errorResponse,
+} = require("../../utils/responseHelper");
 
 /**
  * GET /api/sites/:siteId/navigation
@@ -10,11 +13,14 @@ const getNavigation = async (req, res) => {
 
   if (!navigation) {
     return res.json(
-      successResponse({ siteId, items: [] }, 'No navigation found. Returning empty.')
+      successResponse(
+        { siteId, items: [] },
+        "No navigation found. Returning empty.",
+      ),
     );
   }
 
-  res.json(successResponse(navigation, 'Navigation retrieved successfully.'));
+  res.json(successResponse(navigation, "Navigation retrieved successfully."));
 };
 
 /**
@@ -25,16 +31,18 @@ const updateNavigation = async (req, res) => {
   const siteId = req.site?._id || req.params.siteId;
 
   if (!items || !Array.isArray(items)) {
-    return res.status(400).json(errorResponse('Navigation items array is required.'));
+    return res
+      .status(400)
+      .json(errorResponse("Navigation items array is required."));
   }
 
   const navigation = await Navigation.findOneAndUpdate(
     { siteId },
     { siteId, items },
-    { returnDocument: 'after', upsert: true, runValidators: true }
+    { returnDocument: "after", upsert: true, runValidators: true },
   );
 
-  res.json(successResponse(navigation, 'Navigation updated successfully.'));
+  res.json(successResponse(navigation, "Navigation updated successfully."));
 };
 
 module.exports = { getNavigation, updateNavigation };
