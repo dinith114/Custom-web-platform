@@ -7,12 +7,18 @@ const { successResponse, errorResponse } = require('../../utils/responseHelper')
  * Appends random suffix if slug already exists
  */
 const generateSlug = async (name) => {
-  let slug = name
+  const base = (name ?? '').toString().trim();
+  if (!base) return '';
+
+  let slug = base
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
+
+  slug = slug.replace(/^-|-$/g, '');
+  if (!slug) return '';
 
   const existing = await Site.findOne({ slug });
   if (existing) {
@@ -42,6 +48,9 @@ const createSite = async (req, res) => {
   }
 
   const slug = await generateSlug(name);
+  if (!slug) {
+    return res.status(400).json(errorResponse('Unable to generate a valid slug from site name.'));
+  }
   const subdomain = slug;
 
   const site = await Site.create({
@@ -66,16 +75,33 @@ const getSiteById = async (req, res) => {
  * PUT /api/sites/:siteId
  */
 const updateSite = async (req, res) => {
-  const { name } = req.body;
+  const { name, customDomain, templateId, status } = req.body;
 
   const updateData = {};
-  if (name) updateData.name = name;
+  if (typeof name === 'string') updateData.name = name;
 
-  const site = await Site.findByIdAndUpdate(
-    req.params.siteId,
-    updateData,
-    { new: true, runValidators: true }
-  );
+  if (customDomain !== undefined) {
+    updateData.customDomain = customDomain === '' ? null : customDomain;
+  }
+
+  if (templateId !== undefined) {
+    updateData.templateId = templateId || null;
+  }
+
+  if (typeof status === 'string') {
+    updateData.status = status;
+    if (status === 'published') {
+      updateData.publishedAt = req.site?.publishedAt || new Date();
+    }
+    if (status === 'draft') {
+      updateData.publishedAt = null;
+    }
+  }
+
+  const site = await Site.findByIdAndUpdate(req.site._id, updateData, {
+    returnDocument: 'after',
+    runValidators: true,
+  });
 
   res.json(successResponse(site, 'Site updated successfully.'));
 };
@@ -84,8 +110,20 @@ const updateSite = async (req, res) => {
  * DELETE /api/sites/:siteId
  */
 const deleteSite = async (req, res) => {
-  await Site.findByIdAndDelete(req.params.siteId);
-  // TODO: also delete related pages, navigation, media for this site
+  const siteId = req.site._id;
+
+  // Delete related site data (best-effort, but fail loudly if something goes wrong)
+  const Page = require('../pages/page.model');
+  const Navigation = require('../navigation/navigation.model');
+  const Media = require('../media/media.model');
+
+  await Promise.all([
+    Page.deleteMany({ siteId }),
+    Navigation.deleteOne({ siteId }),
+    Media.deleteMany({ siteId }),
+  ]);
+
+  await Site.findByIdAndDelete(siteId);
   res.json(successResponse(null, 'Site deleted successfully.'));
 };
 

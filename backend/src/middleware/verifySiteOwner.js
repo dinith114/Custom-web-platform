@@ -6,6 +6,10 @@ const Site = require('../modules/sites/site.model');
  * Attaches site to req.site for downstream use.
  */
 const verifySiteOwner = async (req, res, next) => {
+  if (!req.user || !req.user.id) {
+    return res.status(401).json(errorResponse('Access denied. No token provided.'));
+  }
+
   const siteId = req.params.siteId;
 
   const site = await Site.findById(siteId);

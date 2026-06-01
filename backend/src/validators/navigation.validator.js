@@ -24,6 +24,10 @@ const updateNavigationRules = [
   body('items.*.isVisible')
     .optional()
     .isBoolean().withMessage('isVisible must be a boolean.'),
+
+  body('items.*.children')
+    .optional()
+    .isArray().withMessage('children must be an array.'),
 ];
 
 module.exports = { updateNavigationRules };

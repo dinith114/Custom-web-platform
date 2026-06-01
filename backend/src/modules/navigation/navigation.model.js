@@ -8,10 +8,14 @@ const navigationItemSchema = new mongoose.Schema(
     url: { type: String, default: null },
     order: { type: Number, default: 0 },
     isVisible: { type: Boolean, default: true },
-    children: { type: Array, default: [] },
   },
   { _id: false }
 );
+
+// Support nested navigation items (dropdowns) recursively.
+navigationItemSchema.add({
+  children: { type: [navigationItemSchema], default: [] },
+});
 
 const navigationSchema = new mongoose.Schema(
   {

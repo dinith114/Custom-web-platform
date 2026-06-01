@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const config = require("./config");
 const errorHandler = require("./middleware/errorHandler");
+const { errorResponse } = require("./utils/responseHelper");
 
 const app = express();
 
@@ -54,9 +55,7 @@ app.use("/api/sites/:siteId/media", require("./modules/media/media.routes"));
 // 404 Handler
 // ==============================
 app.use((req, res) => {
-  res
-    .status(404)
-    .json({ success: false, message: `Route not found: ${req.originalUrl}` });
+  res.status(404).json(errorResponse(`Route not found: ${req.originalUrl}`));
 });
 
 // ==============================

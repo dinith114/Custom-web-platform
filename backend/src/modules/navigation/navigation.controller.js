@@ -5,11 +5,12 @@ const { successResponse, errorResponse } = require('../../utils/responseHelper')
  * GET /api/sites/:siteId/navigation
  */
 const getNavigation = async (req, res) => {
-  let navigation = await Navigation.findOne({ siteId: req.params.siteId });
+  const siteId = req.site?._id || req.params.siteId;
+  let navigation = await Navigation.findOne({ siteId });
 
   if (!navigation) {
     return res.json(
-      successResponse({ siteId: req.params.siteId, items: [] }, 'No navigation found. Returning empty.')
+      successResponse({ siteId, items: [] }, 'No navigation found. Returning empty.')
     );
   }
 
@@ -21,15 +22,16 @@ const getNavigation = async (req, res) => {
  */
 const updateNavigation = async (req, res) => {
   const { items } = req.body;
+  const siteId = req.site?._id || req.params.siteId;
 
   if (!items || !Array.isArray(items)) {
     return res.status(400).json(errorResponse('Navigation items array is required.'));
   }
 
   const navigation = await Navigation.findOneAndUpdate(
-    { siteId: req.params.siteId },
-    { siteId: req.params.siteId, items },
-    { new: true, upsert: true, runValidators: true }
+    { siteId },
+    { siteId, items },
+    { returnDocument: 'after', upsert: true, runValidators: true }
   );
 
   res.json(successResponse(navigation, 'Navigation updated successfully.'));
