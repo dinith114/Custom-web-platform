@@ -123,11 +123,13 @@ const deleteSite = async (req, res) => {
   const Page = require("../pages/page.model");
   const Navigation = require("../navigation/navigation.model");
   const Media = require("../media/media.model");
+  const SiteMember = require("../members/member.model");
 
   await Promise.all([
     Page.deleteMany({ siteId }),
     Navigation.deleteOne({ siteId }),
     Media.deleteMany({ siteId }),
+    SiteMember.deleteMany({ siteId }),
   ]);
 
   await Site.findByIdAndDelete(siteId);

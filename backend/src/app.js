@@ -41,6 +41,10 @@ app.use(
   "/api/sites/:siteId/navigation",
   require("./modules/navigation/navigation.routes"),
 );
+app.use(
+  "/api/sites/:siteId/members",
+  require("./modules/members/member.routes"),
+);
 
 // Admin module
 app.use("/api/admin", require("./modules/admin/admin.routes"));
