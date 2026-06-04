@@ -1,4 +1,5 @@
-const { errorResponse } = require('../utils/responseHelper');
+const config = require("../config");
+const { errorResponse } = require("../utils/responseHelper");
 
 /**
  * Global error handler middleware
@@ -6,16 +7,16 @@ const { errorResponse } = require('../utils/responseHelper');
  */
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
-  console.error(`[Error] ${err.message}`);
+  console.error(`[Error] ${req.method} ${req.originalUrl} - ${err.message}`);
 
-  if (process.env.NODE_ENV === 'development') {
+  if (config.nodeEnv === "development") {
     console.error(err.stack);
   }
 
   // Mongoose validation error
-  if (err.name === 'ValidationError') {
+  if (err.name === "ValidationError") {
     const errors = Object.values(err.errors).map((e) => e.message);
-    return res.status(400).json(errorResponse('Validation failed', errors));
+    return res.status(400).json(errorResponse("Validation failed", errors));
   }
 
   // Mongoose duplicate key error
@@ -27,21 +28,23 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // Mongoose cast error (invalid ObjectId)
-  if (err.name === 'CastError') {
-    return res.status(400).json(errorResponse(`Invalid ${err.path}: ${err.value}`));
+  if (err.name === "CastError") {
+    return res
+      .status(400)
+      .json(errorResponse(`Invalid ${err.path}: ${err.value}`));
   }
 
   // JWT errors
-  if (err.name === 'JsonWebTokenError') {
-    return res.status(401).json(errorResponse('Invalid token'));
+  if (err.name === "JsonWebTokenError") {
+    return res.status(401).json(errorResponse("Invalid token"));
   }
-  if (err.name === 'TokenExpiredError') {
-    return res.status(401).json(errorResponse('Token expired'));
+  if (err.name === "TokenExpiredError") {
+    return res.status(401).json(errorResponse("Token expired"));
   }
 
   // Default server error
   const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
+  const message = err.message || "Internal Server Error";
   return res.status(statusCode).json(errorResponse(message));
 };
 
