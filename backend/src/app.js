@@ -52,8 +52,8 @@ app.use("/api/admin", require("./modules/admin/admin.routes"));
 // Backend Dev 2 modules
 app.use("/api/sites/:siteId/pages", require("./modules/pages/page.routes"));
 app.use("/api/sites/:siteId/media", require("./modules/media/media.routes"));
-// app.use('/api/public', require('./modules/public/public.routes'));
-// app.use('/api/templates', require('./modules/templates/template.routes'));
+app.use("/api/public", require("./modules/public/public.routes"));
+app.use("/api/templates", require("./modules/templates/template.routes"));
 
 // ==============================
 // 404 Handler

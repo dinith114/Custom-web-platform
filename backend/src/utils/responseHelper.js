@@ -6,15 +6,16 @@
  *   res.status(400).json(errorResponse('Error message'));
  */
 
-const successResponse = (data = null, message = 'Success') => ({
+const successResponse = (data = null, message = "Success") => ({
   success: true,
   message,
   data,
 });
 
-const errorResponse = (message = 'Something went wrong', errors = null) => ({
+const errorResponse = (message = "Something went wrong", errors = null) => ({
   success: false,
   message,
+  error: message,
   ...(errors && { errors }),
 });
 
