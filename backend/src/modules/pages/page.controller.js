@@ -164,6 +164,32 @@ const updatePage = async (req, res) => {
 };
 
 /**
+ * POST /api/sites/:siteId/pages/:pageId/publish
+ * Copies draft content into published content and marks the page as published.
+ */
+const publishPage = async (req, res) => {
+  const { siteId, pageId } = req.params;
+
+  const page = await Page.findOne({ _id: pageId, siteId });
+  if (!page) {
+    return res.status(404).json(errorResponse("Page not found."));
+  }
+
+  if (page.draftContent == null) {
+    return res
+      .status(400)
+      .json(errorResponse("Page draft content is required before publishing."));
+  }
+
+  page.publishedContent = page.draftContent;
+  page.status = "published";
+  page.publishedAt = new Date();
+  await page.save();
+
+  res.json(successResponse(page, "Page published successfully."));
+};
+
+/**
  * DELETE /api/sites/:siteId/pages/:pageId
  */
 const deletePage = async (req, res) => {
@@ -182,5 +208,6 @@ module.exports = {
   createPage,
   getPageById,
   updatePage,
+  publishPage,
   deletePage,
 };

@@ -14,6 +14,7 @@ const {
   createPage,
   getPageById,
   updatePage,
+  publishPage,
   deletePage,
 } = require("./page.controller");
 
@@ -25,6 +26,7 @@ router.get("/", listPages);
 router.post("/", createPageRules, validate, createPage);
 router.get("/:pageId", getPageById);
 router.put("/:pageId", updatePageRules, validate, updatePage);
+router.post("/:pageId/publish", publishPage);
 router.delete("/:pageId", deletePage);
 
 module.exports = router;
