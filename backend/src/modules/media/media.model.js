@@ -41,6 +41,12 @@ const mediaSchema = new mongoose.Schema(
       required: [true, "Storage key is required"],
       trim: true,
     },
+    resourceType: {
+      type: String,
+      required: [true, "Resource type is required"],
+      trim: true,
+      default: "image",
+    },
     uploadedAt: {
       type: Date,
       default: Date.now,
