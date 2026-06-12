@@ -5,6 +5,7 @@ import { useBuilderStore } from "@/store/builderStore";
 import { Section } from "./Section";
 import { DropZone } from "./DropZone";
 import { useDroppable } from "@dnd-kit/core";
+import { IconPlusCircle } from "@/components/shared/Icons";
 
 export function BuilderCanvas() {
   const { sections, deviceMode } = useBuilderStore();
@@ -19,11 +20,21 @@ export function BuilderCanvas() {
         style={{ maxWidth: widthMap[deviceMode] }}
       >
         {sections.length === 0 && (
-          <div className={`flex h-80 items-center justify-center border-2 border-dashed rounded-lg transition-colors ${isOver ? "border-brand-400 bg-brand-50" : "border-gray-200"}`}>
+          <div
+            className={`flex h-[500px] items-center justify-center border-2 border-dashed rounded-lg transition-colors m-4 ${
+              isOver ? "border-brand-400 bg-brand-50" : "border-gray-200"
+            }`}
+          >
             <div className="text-center">
-              <span className="text-4xl">🎯</span>
-              <p className="mt-3 text-sm font-medium text-gray-500">Drag a component from the left panel</p>
-              <p className="mt-1 text-xs text-gray-400">Drop it here to start building your page</p>
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-50">
+                <IconPlusCircle className="w-8 h-8 text-brand-500" />
+              </div>
+              <p className="mt-4 text-sm font-medium text-gray-700">
+                Drag a component from the left panel
+              </p>
+              <p className="mt-1 text-xs text-gray-400">
+                Drop it here to start building your page
+              </p>
             </div>
           </div>
         )}

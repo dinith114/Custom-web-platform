@@ -7,6 +7,7 @@ import { LinkEditor } from "./LinkEditor";
 import { ImagePicker } from "./ImagePicker";
 import { SeoPanel } from "./SeoPanel";
 import { useCallback } from "react";
+import { IconSliders, IconClose } from "@/components/shared/Icons";
 
 export function PropertiesPanel() {
   const { selectedComponentId, sections, updateComponentInSection } = useBuilderStore();
@@ -31,23 +32,27 @@ export function PropertiesPanel() {
 
   return (
     <aside className="w-72 overflow-y-auto border-l border-gray-200 bg-white custom-scrollbar">
-      <div className="border-b border-gray-200 p-3">
-        <h2 className="text-sm font-semibold text-gray-700">Properties</h2>
+      <div className="border-b border-gray-200 p-4">
+        <h2 className="text-sm font-semibold text-gray-900">Properties</h2>
       </div>
       {!selected ? (
-        <div className="p-6 text-center">
-          <span className="text-3xl">🎨</span>
-          <p className="mt-3 text-sm text-gray-400">Select a component to edit its properties</p>
+        <div className="flex flex-col items-center justify-center p-8 pt-24">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-50">
+            <IconSliders className="w-7 h-7 text-gray-300" />
+          </div>
+          <p className="mt-4 text-sm text-gray-400 text-center leading-relaxed">
+            Select a component to edit its properties
+          </p>
         </div>
       ) : (
-        <div className="space-y-4 p-3">
+        <div className="space-y-4 p-4">
           <div className="rounded-lg bg-gray-50 px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center justify-between">
             <span>{selected.type}</span>
             <button
               onClick={() => useBuilderStore.getState().selectComponent(null)}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-gray-600 transition-colors"
             >
-              ✕
+              <IconClose className="w-3.5 h-3.5" />
             </button>
           </div>
 

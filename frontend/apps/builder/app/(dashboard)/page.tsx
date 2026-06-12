@@ -13,6 +13,7 @@ export default function DashboardPage() {
     <div>
       <PageHeader
         title="My Websites"
+        subtitle="Manage and edit your projects."
         action={{ label: "+ Create Website", onClick: () => setIsCreateOpen(true) }}
       />
       <SiteGrid />
